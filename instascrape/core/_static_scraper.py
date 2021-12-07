@@ -144,11 +144,12 @@ class _StaticHtmlScraper(ABC):
             return_data = self._get_json_from_source(self.source, headers=headers, session=session)
             flat_json_dict = flatten_dict(return_data["json_dict"])
 
-            #HACK: patch mapping to fix the profile pic scrape when a sessionid is present
+            #HACK: patch mapping to fix the profile pic & biography scrape when a sessionid is present
             try:
                 if "sessionid" in headers["cookie"]:
                     mapping["profile_pic_url"] = deque(["user_profile_pic_url"])
                     mapping["profile_pic_url_hd"] = deque(["user_profile_pic_url_hd"])
+                    mapping["biography"] = deque(["user_biography"])
             except KeyError:
                 pass
 
